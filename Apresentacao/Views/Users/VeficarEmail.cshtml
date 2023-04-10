@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Verificar Email";
+    Layout = "_LayoutUsers";
+}
+@model UserModel?
+<!-- verify email basic -->
+<div class="card mb-0">
+    <div class="card-body">
+        <a href="https://www.associatec.com.br" class="brand-logo">
+            <img src="https://www.associatec.com.br/wp-content/uploads/2022/08/Logo_Associatec_topo.png" width="155" alt="Vuexy Admin" style="border: 0; max-width: 100%; line-height: 100%; vertical-align: middle;">
+        </a>
+
+        <h2 class="card-title fw-bolder mb-1">Por favor, Vefique seu email para as proximas instrução ✉️</h2>
+        <p class="card-text mb-2">
+            O mail foi enviado para  <span class="fw-bolder">@Model?.Email</span>, Por favor clique no link no email para continuar
+            Obrigado
+        </p>
+
+        <a asp-action="index" asp-controller="users" class="btn btn-primary w-100">Logar no sistema?</a>
+
+    </div>
+</div>
+<!-- / verify email basic -->

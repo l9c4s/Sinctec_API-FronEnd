@@ -36,8 +36,6 @@ namespace Apresentacao.Controllers
         }
 
 
-
-
         public IActionResult EmailReset()
         {
             return View();
@@ -48,5 +46,9 @@ namespace Apresentacao.Controllers
             return View();
         }
 
+        public IActionResult VeficarEmail()
+        {
+            return View();
+        }
     }
 }

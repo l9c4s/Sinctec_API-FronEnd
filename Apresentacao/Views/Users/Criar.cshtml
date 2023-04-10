@@ -35,13 +35,13 @@
                 <label class="form-label" for="confirm_password_user">Confirmar Senha</label>
                 <div class="input-group input-group-merge">
                     <span class="input-group-text"><i class='icon-vuesax-linear-lock'></i></span>
-                    <input type="password" id="InputSenhaConfirma" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
+                    <input type="password" id="User-senha-confirm" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
                 </div>
             </div>
             <div class="mb-1">
                 <div class="password-strength">
                     <div class="d-flex justify-content-start">
-                        <i id="i-caracteres" data-feather='check-circle'></i>
+                        <i id="i-caracteres8" data-feather='check-circle'></i>
                         <p class="ps-2 lh-1">8 Caracteres</p>
                     </div>
                     <div class="d-flex justify-content-start">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="d-flex justify-content-start">
                         <i id="I-correspondem" data-feather='check-circle'></i>
-                        <p class="ps-2 lh-1">Senha correspondem  </p>
+                        <p class="ps-2 lh-1">Senha correspondem </p>
                     </div>
                 </div>
                 <p id="password-strength"></p>
@@ -81,63 +81,130 @@
             $('#User-senha').keyup(function () {
 
                 var password = $('#User-senha').val();
-                var passwordConfirm = $('#InputSenhaConfirma').val();
                 var passwordLength = password.length;
-
-                var Caracters = $('i-caracteres');
-                var Maiusculo = $('i-maisculo');
-                var Especial = $('i-especial');
-                var numero = $('i-numero');
-                var caracteres = $('I-correspondem');
-
-                console.log(passwordLength);
+                var Caracters8 = $('#i-caracteres8');
+                var Maiusculo = $('#i-maisculo');
+                var Especial = $('#i-especial');
+                var numero = $('#i-numero');
 
                 if (passwordLength >= 8) {
-                    console.log("Entrou no if do tamanho ")
+                    Caracters8.css("color", "green");
+                } else {
+                    Caracters8.css("color", "");
+                }
+
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+                    Maiusculo.css("color", "green")
+                } else {
+                    Maiusculo.css("color", "")
                 }
 
                 if (password.match(/[!#$%^&*]/)) {
-                    console.log("Entrou no if do caracteres especial ")
+                    Especial.css("color", "green");
+                } else {
+                    Especial.css("color", "")
                 }
 
                 if (password.match(/[0-9]/)) {
-                    console.log("Entrou no if numerico ");
+                    numero.css("color", "green");
+                } else {
+                    numero.css("color", "")
                 }
 
-                if (password === passwordConfirm) {
-                    console.log("entrou no if da senhas");
-                }
-
-                if (/[a-z]/.test(password) && /[A-Z]/.test(password) {
-                    console.log("entrou no if das letrs maisucloas");
-                }
-                return /[a-z]/.test(str) && /[A-Z]/.test(str);
 
             });
+
+            $('#User-senha-confirm').keyup(function () {
+                var password = $('#User-senha').val();
+                var passwordConfirm = $('#User-senha-confirm').val();
+                var caracteres = $('#I-correspondem');
+
+                if (password.length >= 1) {
+                    if (password == passwordConfirm) {
+                        console.log("entrou no if da senhas");
+                        caracteres.css("color", "green")
+                    } else {
+                        caracteres.css("color", "")
+                    }
+                }
+            });
+
         });
 
     </script>
     <script>
-        async function CriarUsuario(event) {
-            event.preventDefault();
+        async function validacampos() {
+
             var NomeUser = $('#User-nome').val();
             var EmailUser = $('#User-email').val();
             var SenhaUser = $('#User-senha').val();
+            var SenhaUserConfirm = $('#User-senha-confirm').val();
 
-
-            if (!NomeUser || !EmailUser || !SenhaUser) {
+            if (!NomeUser || !EmailUser || !SenhaUser || !SenhaUserConfirm) {
                 await swal.close();
                 alertError("Por favor, Preencha todos os campos");
-            } else {
-
+                return false;
             }
+            return true;
+        };
+        async function validaSenha() {
+            var password = $('#User-senha').val();
+            var passwordConfirm = $('#User-senha-confirm').val();
+
+ 
+            if (password.length < 8) {
+                await swal.close();
+                alertError("Sua senha deve conter 8 caracteres");
+                return false
+            }
+            var bool = /[a-z]/.test(password);
+            var bool2 = /[a-z]/.test(password);
+
+            console.log(bool);
+            console.log(bool2);
+
+            if (!bool || !bool2) {
+                await swal.close();
+                alertError("Sua senha deve ter letras maisuculas e minusculas");
+                return false
+            }
+
+            bool = password.match(/[!#$%^&*]/);
+
+            if (!bool) {
+                await swal.close();
+                alertError("Sua senha deve ter caracteres especiais");
+                return false
+            }
+
+            bool = password.match(/[0-9]/)
+            if (!bool) {
+                await swal.close();
+                alertError("Sua senha deve ter pelo menos 1 numero");
+                return false
+            }
+            bool = password == passwordConfirm;
+            if (!bool) {
+                await swal.close();
+                alertError("As Senha nao batem");
+                return false
+            }
+            return true
+
         };
 
 
+         async function CriarUsuario(event) {
+            event.preventDefault();
 
-
-
-
+            if (await validacampos() || await validaSenha()) {
+                var data = {
+                    Email: message,
+                    Nome: $('#idCall').val()
+                    Senha
+                }
+            }
+        };
 
         async function CriarUsuarioRota(Data) {
 
