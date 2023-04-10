@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
+
+
+
 namespace InfrasStructure.Migrations
 {
     [DbContext(typeof(ContextBase))]
