@@ -2,6 +2,10 @@
     ViewData["Title"] = "Privacy Policy";
     Layout = "_LayoutUsers";
 }
+@model UserModel?
+@section Style{
+
+}
 <!-- Register basic -->
 <div class="card mb-0">
     <div class="card-body">
@@ -10,41 +14,134 @@
         </a>
         <h4 class="card-title mb-1 text-center">Bem Vindo <span class="text-center" style="color:red">Associatec</span> </h4>
         <h5 class="card-title mb-1"> Por favor, Preencha todos os Campos!!</h5>
-        <form class="auth-register-form mt-2" action="index.html" method="POST">
+        <form class="auth-register-form mt-2" onsubmit="return CriarUsuario(event);">
             <div class="mb-1">
-                <label for="register-username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="register-username" name="register-username" placeholder="johndoe" aria-describedby="register-username" tabindex="1" autofocus />
+                <label for="register-username" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="User-nome" name="register-username" placeholder="johndoe" aria-describedby="register-username" tabindex="1" autofocus />
             </div>
             <div class="mb-1">
                 <label for="register-email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="register-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                <input type="text" class="form-control" id="User-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
             </div>
 
             <div class="mb-1">
-                <label for="register-password" class="form-label">Password</label>
-
-                <div class="input-group input-group-merge form-password-toggle">
-                    <input type="password" class="form-control form-control-merge" id="register-password" name="register-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="register-password" tabindex="3" />
-                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                <label class="form-label" for="confirm_password_user">Digite sua senha </label>
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='icon-vuesax-linear-lock'></i></span>
+                    <input type="password" id="User-senha" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
                 </div>
             </div>
             <div class="mb-1">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="register-privacy-policy" tabindex="4" />
-                    <label class="form-check-label" for="register-privacy-policy">
-                        I agree to <a href="#">privacy policy & terms</a>
-                    </label>
+                <label class="form-label" for="confirm_password_user">Confirmar Senha</label>
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='icon-vuesax-linear-lock'></i></span>
+                    <input type="password" id="InputSenhaConfirma" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
                 </div>
             </div>
-            <button class="btn btn-primary w-100" tabindex="5">Sign up</button>
+            <div class="mb-1">
+                <div class="password-strength">
+                    <div class="d-flex justify-content-start">
+                        <i id="i-caracteres" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">8 Caracteres</p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="i-maisculo" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Letra maiúsculas </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="i-especial" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Caracteres especial </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="i-numero" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Numero </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="I-correspondem" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">Senha correspondem  </p>
+                    </div>
+                </div>
+                <p id="password-strength"></p>
+            </div>
+            <button class="btn btn-primary w-100" tabindex="5">Criar nova conta</button>
         </form>
 
         <p class="text-center mt-2">
-            <span>Already have an account?</span>
-            <a href="auth-login-basic.html">
-                <span>Sign in instead</span>
+            <span>Voce ja tem conta?</span>
+            <a asp-action="index" asp-controller="Users">
+                <span>Logar</span>
             </a>
         </p>
     </div>
 </div>
 <!-- /Register basic -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#User-senha').keyup(function () {
+
+                var password = $('#User-senha').val();
+                var passwordConfirm = $('#InputSenhaConfirma').val();
+                var passwordLength = password.length;
+
+                var Caracters = $('i-caracteres');
+                var Maiusculo = $('i-maisculo');
+                var Especial = $('i-especial');
+                var numero = $('i-numero');
+                var caracteres = $('I-correspondem');
+
+                console.log(passwordLength);
+
+                if (passwordLength >= 8) {
+                    console.log("Entrou no if do tamanho ")
+                }
+
+                if (password.match(/[!#$%^&*]/)) {
+                    console.log("Entrou no if do caracteres especial ")
+                }
+
+                if (password.match(/[0-9]/)) {
+                    console.log("Entrou no if numerico ");
+                }
+
+                if (password === passwordConfirm) {
+                    console.log("entrou no if da senhas");
+                }
+
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password) {
+                    console.log("entrou no if das letrs maisucloas");
+                }
+                return /[a-z]/.test(str) && /[A-Z]/.test(str);
+
+            });
+        });
+
+    </script>
+    <script>
+        async function CriarUsuario(event) {
+            event.preventDefault();
+            var NomeUser = $('#User-nome').val();
+            var EmailUser = $('#User-email').val();
+            var SenhaUser = $('#User-senha').val();
+
+
+            if (!NomeUser || !EmailUser || !SenhaUser) {
+                await swal.close();
+                alertError("Por favor, Preencha todos os campos");
+            } else {
+
+            }
+        };
+
+
+
+
+
+
+
+        async function CriarUsuarioRota(Data) {
+
+
+        }
+    </script>
+ }

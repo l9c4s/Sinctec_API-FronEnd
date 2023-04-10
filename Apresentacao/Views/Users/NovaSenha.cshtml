@@ -1,5 +1,51 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Nova Senha";
+    Layout = "_LayoutUsers";
+}
+
+
+<!-- Reset Password basic -->
+<div class="card mb-0">
+    <div class="card-body">
+        <a href="https://www.associatec.com.br" class="brand-logo">
+            <img src="https://www.associatec.com.br/wp-content/uploads/2022/08/Logo_Associatec_topo.png" width="155" alt="Vuexy Admin" style="border: 0; max-width: 100%; line-height: 100%; vertical-align: middle;">
+        </a>
+
+        <h4 class="card-title mb-1">Resetar senha 🔒</h4>
+        <p class="card-text mb-2">Por favor, Digite seu email e depois sua senha nova!!!</p>
+
+        <form class="auth-reset-password-form mt-2" action="auth-login-basic.html" method="POST">
+            <div class="mb-1">
+                <label for="register-email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="register-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+            </div>
+            <div class="mb-1">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="reset-password-new">New Password</label>
+                </div>
+                <div class="input-group input-group-merge form-password-toggle">
+                    <input type="password" class="form-control form-control-merge" id="reset-password-new" name="reset-password-new" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="reset-password-new" tabindex="1" autofocus />
+                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                </div>
+            </div>
+            <div class="mb-1">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="reset-password-confirm">Confirm Password</label>
+                </div>
+                <div class="input-group input-group-merge form-password-toggle">
+                    <input type="password" class="form-control form-control-merge" id="reset-password-confirm" name="reset-password-confirm" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="reset-password-confirm" tabindex="2" />
+                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100" tabindex="3">Registrar nova senha</button>
+        </form>
+
+        <p class="text-center mt-2">
+            <a asp-action="index" asp-controller="Users"> <i data-feather="chevron-left"></i> Voltar para o login </a>
+        </p>
+    </div>
+</div>
+<!-- /Reset Password basic -->
+@section scripts {
+    
 }

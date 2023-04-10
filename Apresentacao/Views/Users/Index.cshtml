@@ -38,6 +38,13 @@
             <button class="btn btn-primary w-100" tabindex="4">Logar</button>
         </form>
 
+       <p class="text-center mt-2">
+            <span>Novo aqui, </span>
+            <a style="color:red" asp-controller="Users" asp-action="NovaSenha">
+                <span>Criar Conta?</span>
+            </a>
+        </p>
+
         <p class="text-center mt-2">
             <span>Novo aqui, </span>
             <a style="color:red" asp-controller="Users" asp-action="Criar">
@@ -47,3 +54,6 @@
     </div>
 </div>
 <!-- /Login basic -->
+@section scripts {
+   
+}

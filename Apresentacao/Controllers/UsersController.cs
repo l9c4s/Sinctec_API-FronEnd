@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
+﻿using Apresentacao.Models;
+using Microsoft.AspNetCore.Mvc;
 namespace Apresentacao.Controllers
 {
     public class UsersController : Controller
@@ -21,6 +20,23 @@ namespace Apresentacao.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [Route("Users/CriarUsuario")]
+        public async Task<IActionResult> CriarUsuario(UserModel entity)
+        {
+            try
+            {
+                return Ok(entity);
+            }
+            catch (Exception)
+            {
+                return BadRequest(string.Empty);
+            }
+        }
+
+
+
 
         public IActionResult EmailReset()
         {

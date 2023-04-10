@@ -32,9 +32,12 @@
     <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/authentication.css">
     <!-- END: Page CSS-->
     <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/extensions/sweetalert2.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/extensions/ext-component-sweet-alerts.min.css" />
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
     <!-- END: Custom CSS-->
-
+    @RenderSection("Style", required: false)
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
@@ -56,11 +59,14 @@
         </div>
     </div>
     <!-- END: Content-->
+
+
     <!-- BEGIN: Vendor JS-->
     <script src="~/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
     <!-- BEGIN: Page Vendor JS-->
     <script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <script src="~/app-assets/vendors/js/jquery/jquery.min.js"></script>
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
     <script src="~/app-assets/js/core/app-menu.js"></script>
@@ -68,8 +74,13 @@
     <!-- END: Theme JS-->
     <!-- BEGIN: Page JS-->
     <script src="~/app-assets/js/scripts/pages/auth-login.js"></script>
-    <!-- END: Page JS-->
+    <script src="~/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <script src="~/assets/js/functions.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/floating.js/2.6.2/floating.js"></script>
+    <!-- END: Page JS-->
+    @RenderSection("scripts", required: false)
     <script>
         $(window).on('load', function () {
             if (feather) {
