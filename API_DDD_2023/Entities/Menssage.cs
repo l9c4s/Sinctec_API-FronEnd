@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entities.Entities
+{
+    [Table("TB_MESSAGE")]
+    public class Menssage : Notifies
+    {
+        [Column("MSN_ID")]
+        public int Id { get; set; }
+        [Column("MSN_TITULO")]
+        public string Titulo { get; set; }
+        [Column("MSN_ATIVO")]
+        public bool Ativo { get; set; }
+        [Column("MSN_DATA_CADASTRO")]
+        public DateTime DataCadastro { get; set; }
+        [Column("MSN_DATA_ALTERACAO")]
+        public DateTime DataAlteracao { get; set; }
+
+
+        [ForeignKey("ApplicationUser")]
+        [Column(Order = 1 )]
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+    }
+}
