@@ -21,6 +21,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Users}/{action=VeficarEmail}");
+    pattern: "{controller=Users}/{action=index}");
 
 app.Run();

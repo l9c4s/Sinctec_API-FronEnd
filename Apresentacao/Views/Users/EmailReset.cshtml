@@ -2,6 +2,7 @@
     ViewData["Title"] = "Email - Reset";
     Layout = "_LayoutUsers";
 }
+
 <!-- Reset Password basic -->
 <div class="card mb-0">
     <div class="card-body">
@@ -11,10 +12,10 @@
         <h4 class="card-title mb-1">Poxa esqueceu a senha!! 🔒</h4>
         <p class="card-text mb-2">Não se preocupe, Digite seu email!!</p>
 
-        <form method="POST">
-                <div class="mb-1">
-                <label for="login-email" class="form-label text-center">Email</label>
-                <input type="text" class="form-control" id="login-email" name="login-email" placeholder="john@example.com" aria-describedby="login-email" tabindex="1" autofocus />
+        <form onsubmit="return ResetEmail(event);">
+            <div class="mb-1">
+                <label for="User-Email" class="form-label text-center">Email</label>
+                <input type="text" class="form-control" id="User-Email" name="User-Email" placeholder="john@example.com" aria-describedby="User-Email" tabindex="1" autofocus />
             </div>
             <button class="btn btn-primary w-100" tabindex="3">Resetar Senha</button>
         </form>
@@ -24,7 +25,36 @@
         </p>
     </div>
 </div>
+
+
+
 <!-- /Reset Password basic -->
 @section scripts {
-    
+    <script>
+        async function ResetEmail(event){
+            event.preventDefault();
+            var EmailUser = $('#User-Email').val();
+
+        if ( !EmailUser) {
+            await swal.close();
+            alertError("Por favor, Preencha o email!!");
+            return false;
+        }
+            EnviarEmailReser(EmailUser);
+       }
+
+       async function EnviarEmailReser(Email){
+            await $.ajax({
+                url: `/Users/EnviarReset/${Email}`,
+                type: "POST",
+            }).done(async function (response) {
+                console.log(response);
+
+            }).fail(async function (xhr) {
+                    await Swal.close();
+                    alertError(`Houve um erro, descrição: ${xhr.responseText}`);
+                });
+       }
+        
+    </script>
 }

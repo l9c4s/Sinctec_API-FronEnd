@@ -199,16 +199,28 @@
 
             if (await validacampos() || await validaSenha()) {
                 var data = {
-                    Email: message,
-                    Nome: $('#idCall').val()
-                    Senha
-                }
+                    Email: $('#User-email').val(),
+                    Nome:  $('#User-nome').val(),
+                    Senha: $('#User-senha').val()
+                };
+               await CriarUsuarioRota(data);
             }
         };
 
-        async function CriarUsuarioRota(Data) {
-
-
+        async function CriarUsuarioRota(Envoiment) {
+            console.log(Envoiment);
+            await $.ajax({
+                url: "/Users/CriarUsuario",
+                type: "POST",
+                data: Envoiment
+            })
+                .done(async function (response) {
+                    console.log(response);
+                })
+                .fail(async function (xhr) {
+                    await Swal.close();
+                    alertError(`Houve um erro, descrição: ${xhr.responseText}`);
+                });
         }
     </script>
  }

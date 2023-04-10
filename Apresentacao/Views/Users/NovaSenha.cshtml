@@ -17,25 +17,47 @@
         <form class="auth-reset-password-form mt-2" action="auth-login-basic.html" method="POST">
             <div class="mb-1">
                 <label for="register-email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="register-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                <input type="text" class="form-control" id="User-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+            </div>
+
+            <div class="mb-1">
+                <label class="form-label" for="confirm_password_user">Digite sua senha </label>
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='icon-vuesax-linear-lock'></i></span>
+                    <input type="password" id="User-senha" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
+                </div>
             </div>
             <div class="mb-1">
-                <div class="d-flex justify-content-between">
-                    <label class="form-label" for="reset-password-new">New Password</label>
-                </div>
-                <div class="input-group input-group-merge form-password-toggle">
-                    <input type="password" class="form-control form-control-merge" id="reset-password-new" name="reset-password-new" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="reset-password-new" tabindex="1" autofocus />
-                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                <label class="form-label" for="confirm_password_user">Confirmar Senha</label>
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class='icon-vuesax-linear-lock'></i></span>
+                    <input type="password" id="User-senha-confirm" class="form-control input-group-text text-start" name="confirm_password_user" placeholder="Confirmar Senha">
                 </div>
             </div>
             <div class="mb-1">
-                <div class="d-flex justify-content-between">
-                    <label class="form-label" for="reset-password-confirm">Confirm Password</label>
+                <div class="password-strength">
+                    <div class="d-flex justify-content-start">
+                        <i id="i-caracteres8" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">8 Caracteres</p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="i-maisculo" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Letra maiúsculas </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                    <i id="i-especial" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Caracteres especial </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="i-numero" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">1 Numero </p>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <i id="I-correspondem" data-feather='check-circle'></i>
+                        <p class="ps-2 lh-1">Senha correspondem </p>
+                    </div>
                 </div>
-                <div class="input-group input-group-merge form-password-toggle">
-                    <input type="password" class="form-control form-control-merge" id="reset-password-confirm" name="reset-password-confirm" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="reset-password-confirm" tabindex="2" />
-                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
-                </div>
+                <p id="password-strength"></p>
             </div>
             <button class="btn btn-primary w-100" tabindex="3">Registrar nova senha</button>
         </form>

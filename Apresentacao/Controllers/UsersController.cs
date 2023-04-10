@@ -35,6 +35,19 @@ namespace Apresentacao.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Users/EnviarReset/{id}")]
+        public IActionResult EnviarReset(string id)
+        {
+            try
+            {
+                return Ok(id);
+            }
+            catch (Exception)
+            {
+                return BadRequest(string.Empty);
+            }
+        }
 
         public IActionResult EmailReset()
         {
