@@ -147,6 +147,7 @@
             }
             return true;
         };
+
         async function validaSenha() {
             var password = $('#User-senha').val();
             var passwordConfirm = $('#User-senha-confirm').val();
@@ -158,7 +159,7 @@
                 return false
             }
             var bool = /[a-z]/.test(password);
-            var bool2 = /[a-z]/.test(password);
+            var bool2 = /[A-Z]/.test(password);
 
             console.log(bool);
             console.log(bool2);
@@ -193,11 +194,10 @@
 
         };
 
-
-         async function CriarUsuario(event) {
+        async function CriarUsuario(event) {
             event.preventDefault();
 
-            if (await validacampos() || await validaSenha()) {
+            if (await validacampos() && await validaSenha()) {
                 var data = {
                     Email: $('#User-email').val(),
                     Nome:  $('#User-nome').val(),
@@ -208,19 +208,18 @@
         };
 
         async function CriarUsuarioRota(Envoiment) {
-            console.log(Envoiment);
             await $.ajax({
                 url: "/Users/CriarUsuario",
                 type: "POST",
                 data: Envoiment
-            })
-                .done(async function (response) {
-                    console.log(response);
-                })
-                .fail(async function (xhr) {
-                    await Swal.close();
-                    alertError(`Houve um erro, descrição: ${xhr.responseText}`);
+            }).done(async function (response) {
+                    
+
+
+              }).fail(async function (xhr) {
+                await Swal.close();
+                alertError(`Houve um erro, descrição: ${xhr.responseText}`);
                 });
-        }
+        };
     </script>
  }

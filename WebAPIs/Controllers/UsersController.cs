@@ -116,17 +116,22 @@ namespace WebAPIs.Controllers
         [AllowAnonymous]
         [Produces("application/json")]
         [HttpPost("/api/ConfirmarEmailIdentity")]
-        public async Task<IActionResult> ConfirmarEmailIdentity(string UserId, string Token)
+        public async Task<IActionResult> ConfirmarEmailIdentity([FromBody] ConfirmEmailMode confirmEmailMode)
         {
-            if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(Token))
+            if(confirmEmailMode == null)
+            {
+                return BadRequest("Preencha Todos os Paramentros");
+            }
+
+            if (string.IsNullOrWhiteSpace(confirmEmailMode.UserId) || string.IsNullOrWhiteSpace(confirmEmailMode.Token))
             {
                 return NotFound("Preencha Todos os Paramentros");
             }
 
-            var DecodedToken = WebEncoders.Base64UrlDecode(Token);
+            var DecodedToken = WebEncoders.Base64UrlDecode(confirmEmailMode.Token);
             string NormaliietTOKEN = Encoding.UTF8.GetString(DecodedToken);
 
-            var user = await _userManager.FindByIdAsync(UserId);
+            var user = await _userManager.FindByIdAsync(confirmEmailMode.UserId);
             if (user == null)
             {
                 return BadRequest("Usuario não encontrado");
@@ -164,7 +169,7 @@ namespace WebAPIs.Controllers
             var ValidResetPassToken = WebEncoders.Base64UrlEncode(EncodeResetPassToken);
 
 
-            string url = $"https://localhost:7066/api/ResetarSenhaIdentity?EmailUser={user.Email}&Token={ValidResetPassToken}";
+            string url = $"https://localhost:7085/NovaSenha/api/ResetarSenhaIdentity?EmailUser={user.Email}&Token={ValidResetPassToken}";
             SengridServices Sengrid = new SengridServices();
 
             if(await Sengrid.Execute(user.Email, url, 2))
@@ -178,23 +183,28 @@ namespace WebAPIs.Controllers
         [AllowAnonymous]
         [Produces("application/json")]
         [HttpPost("/api/ResetarSenhaIdentity")]
-        public async Task<IActionResult> ResetarSenhaIdentity(string EmailUser, string Token, string Senha)
+        public async Task<IActionResult> ResetarSenhaIdentity([FromBody] ResetEmailModel resetEmailModel)
         {
-            if (string.IsNullOrWhiteSpace(EmailUser) || string.IsNullOrWhiteSpace(Token) || string.IsNullOrWhiteSpace(Senha))
+            if (resetEmailModel == null)
+            {
+                return BadRequest("Preencha todos os Paramentros");
+            }
+
+            if (string.IsNullOrWhiteSpace(resetEmailModel.EmailUser) || string.IsNullOrWhiteSpace(resetEmailModel.Senha) || string.IsNullOrWhiteSpace(resetEmailModel.Token))
             {
                 return NotFound("Preencha Todos os Paramentros");
             }
 
-            var user = await _userManager.FindByEmailAsync(EmailUser);
+            var user = await _userManager.FindByEmailAsync(resetEmailModel.EmailUser);
             if (user == null)
             {
                 return BadRequest("Usuario não encontrado");
             }
 
-            var DecodedToken = WebEncoders.Base64UrlDecode(Token);
+            var DecodedToken = WebEncoders.Base64UrlDecode(resetEmailModel.Token);
             string NormalitedToken = Encoding.UTF8.GetString(DecodedToken);
 
-            var result = await _userManager.ResetPasswordAsync(user, NormalitedToken, Senha);
+            var result = await _userManager.ResetPasswordAsync(user, NormalitedToken, resetEmailModel.Senha);
 
             if (result.Succeeded)
             {return Ok("Senha alterada!!!");

@@ -1,9 +1,9 @@
 ﻿namespace Apresentacao.Models
 {
-    public class UserModel
+    public class NovasenhaModel
     {
         public string Email { get; set; }
-        public string Cpf { get; set; }
         public string Senha { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Nova Senha";
     Layout = "_LayoutUsers";
 }
-
+@model TokenModel
 
 <!-- Reset Password basic -->
 <div class="card mb-0">
@@ -14,7 +14,7 @@
         <h4 class="card-title mb-1">Resetar senha 🔒</h4>
         <p class="card-text mb-2">Por favor, Digite seu email e depois sua senha nova!!!</p>
 
-        <form class="auth-reset-password-form mt-2" action="auth-login-basic.html" method="POST">
+        <form class="auth-reset-password-form mt-2" onsubmit=" return CriarSenha(event);">
             <div class="mb-1">
                 <label for="register-email" class="form-label">Email</label>
                 <input type="text" class="form-control" id="User-email" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
@@ -45,7 +45,7 @@
                         <p class="ps-2 lh-1">1 Letra maiúsculas </p>
                     </div>
                     <div class="d-flex justify-content-start">
-                    <i id="i-especial" data-feather='check-circle'></i>
+                        <i id="i-especial" data-feather='check-circle'></i>
                         <p class="ps-2 lh-1">1 Caracteres especial </p>
                     </div>
                     <div class="d-flex justify-content-start">
@@ -69,5 +69,158 @@
 </div>
 <!-- /Reset Password basic -->
 @section scripts {
-    
+    <script>
+        $(document).ready(function () {
+            $('#User-senha').keyup(function () {
+
+                var password = $('#User-senha').val();
+                var passwordLength = password.length;
+                var Caracters8 = $('#i-caracteres8');
+                var Maiusculo = $('#i-maisculo');
+                var Especial = $('#i-especial');
+                var numero = $('#i-numero');
+
+                if (passwordLength >= 8) {
+                    Caracters8.css("color", "green");
+                } else {
+                    Caracters8.css("color", "");
+                }
+
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+                    Maiusculo.css("color", "green")
+                } else {
+                    Maiusculo.css("color", "")
+                }
+
+                if (password.match(/[!#$%^&*]/)) {
+                    Especial.css("color", "green");
+                } else {
+                    Especial.css("color", "")
+                }
+
+                if (password.match(/[0-9]/)) {
+                    numero.css("color", "green");
+                } else {
+                    numero.css("color", "")
+                }
+
+
+            });
+
+            $('#User-senha-confirm').keyup(function () {
+                var password = $('#User-senha').val();
+                var passwordConfirm = $('#User-senha-confirm').val();
+                var caracteres = $('#I-correspondem');
+
+                if (password.length >= 1) {
+                    if (password == passwordConfirm) {
+                        caracteres.css("color", "green")
+                    } else {
+                        caracteres.css("color", "")
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        async function CriarSenha(event) {
+            event.preventDefault();
+
+            var validaCamposForm = await validacampos();
+            var validaSenhaForm = await validaSenha();
+
+            console.log(validaCamposForm);
+            console.log(validaSenhaForm);
+            if (validaCamposForm && validaSenhaForm) {
+               var data = {
+                    Email: $('#User-email').val(),
+                    Senha: $('#User-nome').val(),
+                    Token: @Model?.Token
+                };
+                CriarNovaSenhaRota(data);
+                
+            }
+        };
+
+        async function CriarNovaSenhaRota(Envoiment) {
+            await $.ajax({
+                url: "/Users/CriarUsuario",
+                type: "POST",
+                data: Envoiment
+            }).done(async function (response) {
+                    
+
+
+              }).fail(async function (xhr) {
+                await Swal.close();
+                alertError(`Houve um erro, descrição: ${xhr.responseText}`);
+                });
+        };
+
+
+
+        async function validacampos() {
+            var EmailUser = $('#User-email').val();
+            var SenhaUser = $('#User-senha').val();
+            var SenhaUserConfirm = $('#User-senha-confirm').val();
+
+            if (!EmailUser || !SenhaUser || !SenhaUserConfirm) {
+                await swal.close();
+                alertError("Por favor, Preencha todos os campos");
+                return false;
+            }
+            return true;
+        };
+
+        async function validaSenha() {
+            var password = $('#User-senha').val();
+            var passwordConfirm = $('#User-senha-confirm').val();
+
+            console.log(password);
+            console.log(passwordConfirm);
+            var bool = false;
+            var bool2 = false;   
+            if (password.length < 8) {
+                await swal.close();
+                alertError("Sua senha deve conter 8 caracteres");
+                return false;
+            }
+
+            bool = /[a-z]/.test(password);
+            bool2 = /[A-Z]/.test(password);
+
+            if (!bool || !bool2) {
+                await swal.close();
+                alertError("Sua senha deve ter letras maisuculas e minusculas");
+                return false;
+            }
+
+            bool = password.match(/[!#$%^&*]/);
+
+            if (!bool) {
+                await swal.close();
+                alertError("Sua senha deve ter caracteres especiais");
+                return false;
+            }
+
+            bool = password.match(/[0-9]/);
+
+            if (!bool) {
+                await swal.close();
+                alertError("Sua senha deve ter pelo menos 1 numero");
+                return false;
+            }
+
+            bool = password.normalize() === passwordConfirm.normalize();
+
+            if (!bool) {
+                await swal.close();
+                alertError("As Senha nao batem");
+                return false;
+            }
+            return true;
+
+        };
+    </script>
 }

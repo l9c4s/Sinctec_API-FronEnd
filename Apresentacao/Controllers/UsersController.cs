@@ -15,6 +15,15 @@ namespace Apresentacao.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [Route("Users/Logar")]
+        public IActionResult Logar(LogarModel LogarModel)
+        {
+
+            Console.WriteLine("Entrou aqui");
+
+            return View();
+        }
 
         public IActionResult Criar()
         {
@@ -51,10 +60,13 @@ namespace Apresentacao.Controllers
 
         public IActionResult EmailReset()
         {
-            return View();
+            TokenModel tokenModel = new TokenModel();
+            tokenModel.Token = "AQUIFICAOTOKEN";
+            return View(tokenModel);
         }
 
-        public IActionResult NovaSenha()
+        [HttpPost("NovaSenha/{token}")]
+        public IActionResult NovaSenha([FromQuery] string Token)
         {
             return View();
         }
